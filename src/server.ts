@@ -12,12 +12,14 @@ const PORT = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 
-const db = new Database();
-db.openConnection().then(() =>
-  app.listen(PORT, () =>
-    console.log(`Servidor inicializado na porta --> ${PORT}`)
-  )
-);
 app.get("/", (req: Request, res: Response) => {
   res.send(`Servidor -> OK`);
 });
+
+new Database()
+  .openConnection()
+  .then(() =>
+    app.listen(PORT, () =>
+      console.log(`Servidor inicializado na porta --> ${PORT}`)
+    )
+  );
