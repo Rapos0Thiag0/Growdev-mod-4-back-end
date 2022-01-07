@@ -7,7 +7,7 @@ export default class UserController {
     const { nome, senha } = req.body;
 
     const userExistente: User | undefined = await User.findOne({
-      where: [{ name: nome }],
+      where: [{ nome: nome }],
     });
 
     if (userExistente) {
@@ -24,7 +24,7 @@ export default class UserController {
     const senha = req.query.senha;
 
     const userExistente: User | undefined = await User.findOne({
-      where: [{ name: nome }],
+      where: [{ nome: nome }],
     });
 
     if (!userExistente) {
