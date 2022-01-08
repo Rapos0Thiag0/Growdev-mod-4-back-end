@@ -3,7 +3,7 @@ import {
   BaseEntity,
   PrimaryColumn,
   Column,
-  OneToMany,
+  ManyToOne,
   BeforeUpdate,
   BeforeInsert,
   JoinColumn,
@@ -29,7 +29,7 @@ export class Mensagem extends BaseEntity {
   @Column({ name: "updated_at" })
   updatedAt?: Date;
 
-  @OneToMany(() => User, (user) => user.mensagem)
+  @ManyToOne(() => User, (user) => user.mensagem)
   @JoinColumn({ name: "user_uid" })
   user?: User;
 
