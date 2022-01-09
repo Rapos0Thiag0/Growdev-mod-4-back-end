@@ -37,11 +37,6 @@ export class mensagem1641427308708 implements MigrationInterface {
         type: "timestamp",
         isNullable: false,
       },
-      {
-        name: "user_uid",
-        type: "uuid",
-        isNullable: false,
-      },
     ],
   });
 
