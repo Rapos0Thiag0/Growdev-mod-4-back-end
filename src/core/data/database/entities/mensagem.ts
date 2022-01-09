@@ -23,19 +23,23 @@ export class Mensagem extends BaseEntity {
   @Column()
   detalhamento: string;
 
+  @Column()
+  user_uid: string;
+
   @Column({ name: "created_at" })
   createdAt?: Date;
 
   @Column({ name: "updated_at" })
   updatedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.mensagem)
+  @ManyToOne(() => User, (user) => user.mensagens)
   @JoinColumn({ name: "user_uid" })
   user?: User;
 
   constructor(
     descricao: string,
     detalhamento: string,
+    user_uid: string,
     user: User,
     uid?: string,
     createdAt?: Date,
@@ -44,6 +48,7 @@ export class Mensagem extends BaseEntity {
     super();
     this.descricao = descricao;
     this.detalhamento = detalhamento;
+    this.user_uid = user_uid;
     this.user = user;
     this.uid = uid;
     this.createdAt = createdAt;

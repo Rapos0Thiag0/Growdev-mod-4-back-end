@@ -5,62 +5,74 @@ import { User } from "../../../core/data/database/entities/User";
 export default class UserController {
   public async store(req: Request, res: Response) {
     const { nome, senha } = req.body;
-
-    const user = await new User(nome, senha).save();
-
-    console.log(user);
-
-    return res.status(200).send("usuário criado");
-
-    // const userExistente: User | undefined = await User.findOne({
-    //   where: [{ nome: nome }],
-    // });
-
-    // if (userExistente) {
-    //   return res.status(400).send("Usuário já cadastrado!");
-    // } else {
-    //   const userNovo: User = await new User(nome, senha).save();
-    //   // const userCriado: object = { nome: userNovo.nome, senha: userNovo.senha };
-    //   return res.status(200).json(userNovo);
-    // }
+    const userExistente: User | undefined = await User.findOne({
+      where: [{ nome: nome }],
+    });
+    if (userExistente) {
+      return res.status(400).json("User_exist");
+    } else if (nome === undefined || nome === "") {
+      return res.status(400).send("empty_fields");
+    } else {
+      const userNovo: User = await new User(nome, senha).save();
+      return res.status(200).json(userNovo);
+    }
   }
 
   public async index(req: Request, res: Response) {
-    const users = await User.find();
-
+    const users = await User.find({
+      relations: ["mensagens"],
+      select: ["nome", "senha", "uid"],
+    });
     return res.json(users);
-
-    // const userExistente: User | undefined = await User.findOne({
-    //   where: [{ nome: nome }],
-    // });
-
-    // if (!userExistente) {
-    //   return res
-    //     .status(400)
-    //     .send("Usuário não existe ou não pode ser encontrado!");
-    // }
-
-    // if (userExistente.senha === senha) {
-    //   return res.status(200).send(`${userExistente.uid}`);
-    // } else {
-    //   return res
-    //     .status(400)
-    //     .send("Ocorreu um erro ao tentar gravar o usuário no banco de dados");
-    // }
   }
 
-  // public async viewUsers(req: Request, res: Response) {
-  //   const users = await User.find();
-
-  //   return res.status(200).json(users);
-  // }
-
-  public async view(req: Request, res: Response) {
+  public async viewOne(req: Request, res: Response) {
     const { uid } = req.params;
 
-    const user = await User.findOne(uid);
+    const user = await User.findOne(uid, {
+      relations: ["mensagens"],
+      select: ["nome", "senha", "uid"],
+    });
+    return res.status(200).send(user);
+  }
 
-    return res.json(user);
+  public async view(req: Request, res: Response) {
+    const nome = req.query.nome;
+    const senha = req.query.senha;
+    // const { nome, senha } = req.body;
+
+    const userExistente: User | undefined = await User.findOne({
+      where: [{ nome: nome }],
+      relations: ["mensagens"],
+      select: ["nome", "senha", "uid"],
+    });
+
+    if (
+      nome === undefined ||
+      nome === null ||
+      nome === "" ||
+      senha === undefined ||
+      senha === null ||
+      senha === ""
+    ) {
+      return res.status(400).send("field_error");
+    }
+    if (!userExistente) {
+      return res.status(400).send("user_not_exist");
+    }
+    if (userExistente.senha === senha) {
+      return res.status(200).send(userExistente);
+    } else {
+      return res.status(400).send("senha_error");
+    }
+
+    // const user = await User.findOne(uid, {
+    //   relations: ["mensagens"],
+    //   select: ["nome", "senha", "uid"],
+    // });
+
+    // return res.json({ nome: user?.nome, senha: user?.senha, uid: user?.uid });
+    // return res.json(user);
 
     // const userProcurado: User | undefined = await User.findOne({
     //   where: [{ uid: user_uid }],
@@ -88,22 +100,8 @@ export default class UserController {
       const user = await new User(nome, senha, uid).save();
       console.log(user);
       return res.status(200).send("Usuário atualizado com sucesso!");
-      // const userProcurado: User | undefined = await User.findOne({
-      //   where: [{ uid: user_uid }],
-      // });
-
-      // if (userProcurado) {
-      //   userProcurado.nome = nome;
-      //   userProcurado.senha = senha;
-      //   await User.save(userProcurado);
-
-      //   const userEditado: object = { nome: nome, senha: senha };
-      //   return res.status(200).json(userEditado);
-      // } else {
-      //   return res.status(400).send("Usuário não pode ser encontrado!");
-      // }
     } else {
-      return res.status(400).send("Parâmmetros faltando!");
+      return res.status(400).send("Parâmetros faltando!");
     }
   }
 
@@ -119,26 +117,5 @@ export default class UserController {
     } else {
       return res.status(400).send("Usuário não encontrado!");
     }
-
-    // if (user_uid) {
-    //   const userProcurado: User | undefined = await User.findOne({
-    //     where: [{ uid: user_uid }],
-    //   });
-
-    //   if (userProcurado) {
-    //     const userEncontrado: object = {
-    //       nome: userProcurado.nome,
-    //       senha: userProcurado.senha,
-    //     };
-    //     const remove = await User.remove(userProcurado);
-    //     return res.status(200).json(userEncontrado);
-    //   } else {
-    //     return res
-    //       .status(400)
-    //       .send("Usuário não existe ou não pode ser encontrado!");
-    //   }
-    // } else {
-    //   return res.status(400).send("Falha nas informações apresentadas!");
-    // }
   }
 }

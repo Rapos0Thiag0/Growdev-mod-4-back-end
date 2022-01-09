@@ -7,11 +7,11 @@ export default class Routes {
     const controller = new UserController();
 
     routes.post("/user", controller.store);
-    routes.get("/user", controller.index);
-    // routes.get("/users", controller.viewUsers);
-    routes.get("/user/uid", controller.view);
-    routes.put("/user/uid", controller.update);
-    routes.delete("/user/uid", controller.destroy);
+    routes.get("/users", controller.index);
+    routes.get("/user", controller.view);
+    routes.get("/user/:uid", controller.viewOne);
+    routes.put("/user/:uid", controller.update);
+    routes.delete("/user/:uid", controller.destroy);
 
     return routes;
   }

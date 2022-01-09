@@ -6,11 +6,11 @@ export default class Routes {
     const routes = Router();
     const controller = new MensagemController();
 
-    routes.post("/user/idUser/msg/idUser", controller.store);
-    routes.get("/user/idUser/msg/idUser", controller.index);
-    routes.get("/user/idUser/msg/idMensagem", controller.view);
-    routes.put("/user/idUser/msg/idMensagem", controller.update);
-    routes.delete("/user/idUser/msg/idMensagem", controller.destroy);
+    routes.post("/user/:user_uid/msg", controller.store);
+    routes.get("/user/:user_uid/msg", controller.index);
+    routes.get("/user/:user_uid/msg/:uid", controller.view);
+    routes.put("/user/:user_uid/msg/:uid", controller.update);
+    routes.delete("/user/:user_uid/msg/:uid", controller.destroy);
 
     return routes;
   }

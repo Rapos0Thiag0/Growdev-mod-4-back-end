@@ -28,8 +28,8 @@ export class User extends BaseEntity {
   @Column({ name: "updated_at" })
   updatedAt?: Date;
 
-  @OneToMany(() => Mensagem, (mensagem) => mensagem.user)
-  mensagem?: Mensagem[];
+  @OneToMany(() => Mensagem, (mensagem) => mensagem.user, { cascade: true })
+  mensagens?: Mensagem[];
 
   constructor(
     nome: string,
