@@ -38,7 +38,6 @@ export default class UserController {
   public async view(req: Request, res: Response) {
     const nome = req.query.nome;
     const senha = req.query.senha;
-    // const { nome, senha } = req.body;
 
     const userExistente: User | undefined = await User.findOne({
       where: [{ nome: nome }],
@@ -64,28 +63,6 @@ export default class UserController {
     } else {
       return res.status(400).send("senha_error");
     }
-
-    // const user = await User.findOne(uid, {
-    //   relations: ["mensagens"],
-    //   select: ["nome", "senha", "uid"],
-    // });
-
-    // return res.json({ nome: user?.nome, senha: user?.senha, uid: user?.uid });
-    // return res.json(user);
-
-    // const userProcurado: User | undefined = await User.findOne({
-    //   where: [{ uid: user_uid }],
-    // });
-
-    // if (userProcurado) {
-    //   const userEncontrado: object = {
-    //     nome: userProcurado.nome,
-    //     senha: userProcurado.senha,
-    //   };
-    //   return res.status(200).json(userEncontrado);
-    // } else {
-    //   return res.status(400).send("Erro ao buscar usuário!");
-    // }
   }
 
   public async update(req: Request, res: Response) {
