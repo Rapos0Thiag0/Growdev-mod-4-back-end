@@ -1,16 +1,14 @@
 import {
-  Entity,
   BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  Entity,
   PrimaryColumn,
   Column,
   ManyToOne,
-  BeforeUpdate,
-  BeforeInsert,
   JoinColumn,
 } from "typeorm";
-
 import { v4 as uuid } from "uuid";
-
 import { User } from "./User";
 @Entity({ name: "mensagens" })
 export class Mensagem extends BaseEntity {

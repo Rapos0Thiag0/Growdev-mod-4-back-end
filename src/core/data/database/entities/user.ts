@@ -1,15 +1,13 @@
 import {
-  Entity,
   BaseEntity,
-  Column,
-  PrimaryColumn,
-  OneToMany,
   BeforeInsert,
   BeforeUpdate,
+  Column,
+  Entity,
+  PrimaryColumn,
+  OneToMany,
 } from "typeorm";
-
 import { v4 as uuid } from "uuid";
-
 import { Mensagem } from "./Mensagem";
 
 @Entity({ name: "users" })
