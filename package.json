@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./dist/server.js",
-    "build": "npm run typeorm migration:run && npx tsc",
+    "build": "typeorm migration:run && npx tsc",
     "dev": "ts-node-dev src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "test": "echo \"Errot: no test specified\" && exit1"
