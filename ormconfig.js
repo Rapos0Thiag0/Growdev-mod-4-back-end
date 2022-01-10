@@ -6,13 +6,13 @@ module.exports = {
   synchronize: false,
   logging: false,
   entities: [
-    "src/core/data/database/entities/**/*",
-    // "dist/core/data/database/entities/**/*.entity.js",
+    // "dist/core/data/database/entities/**/*",
+    "dist/core/data/database/entities/**/*.entity.js",
   ],
-  migrations: ["src/core/data/database/migrations/**/*"],
+  migrations: ["dist/core/data/database/migrations/**/*"],
   cli: {
-    entitiesDir: "src/core/data/database/entities",
-    migrationsDir: "src/core/data/database/migrations",
+    entitiesDir: "dist/core/data/database/entities",
+    migrationsDir: "dist/core/data/database/migrations",
   },
   extra: {
     ssl: {
