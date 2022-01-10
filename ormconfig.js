@@ -5,8 +5,8 @@ module.exports = {
   url: process.env.DATABASE_URL,
   synchronize: false,
   logging: false,
-  entities: ["src/core/data/database/entities/**/*"],
-  migrations: ["src/core/data/database/migrations/**/*"],
+  entities: ["dist/core/data/database/entities/**/*.js"],
+  migrations: ["dist/core/data/database/migrations/**/*.js"],
   cli: {
     entitiesDir: "src/core/data/database/entities",
     migrationsDir: "src/core/data/database/migrations",
