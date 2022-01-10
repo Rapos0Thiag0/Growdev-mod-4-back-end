@@ -1,14 +1,15 @@
-import { Mensagem } from "./mensagem";
 import {
+  Entity,
   BaseEntity,
+  PrimaryColumn,
+  Column,
+  OneToMany,
   BeforeInsert,
   BeforeUpdate,
-  Column,
-  Entity,
-  PrimaryColumn,
-  OneToMany,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+
+import { Mensagem } from "./mensagem";
 
 @Entity({ name: "users" })
 export class User extends BaseEntity {

@@ -5,7 +5,7 @@ export default class Database {
 
   public getConnection(): Connection {
     if (Database.connection === null || Database.connection === undefined) {
-      throw new Error("CONEXAO_DATABASE_NAO_ABERTA");
+      throw new Error("CONEXAO_NAO_ABERTA");
     }
     return Database.connection;
   }
@@ -15,7 +15,7 @@ export default class Database {
       try {
         Database.connection = await createConnection();
       } catch (error) {
-        console.log("ERRO AO CONECTAR AO BANCO ->", error);
+        console.error("ERRO AO CONECTAR AO BANCO ->", error);
         throw new Error(`ERRO AO CONECTAR AO BANCO -> ${error}`);
       }
     }
