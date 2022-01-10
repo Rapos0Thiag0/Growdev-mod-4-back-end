@@ -10,12 +10,12 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // const allowed = ["https://mod-4-fe.herokuapp.com"];
-const corsOptions: cors.CorsOptions = {
-  methods: "GET,OPTIONS,PUT,POST,DELETE",
-  origin: "*",
-};
+// const corsOptions: cors.CorsOptions = {
+//   methods: "GET,OPTIONS,PUT,POST,DELETE",
+//   origin: "*",
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 const userRoutes = new UserRoutes().init();
 const mensagemRoutes = new MensagemRoutes().init();
