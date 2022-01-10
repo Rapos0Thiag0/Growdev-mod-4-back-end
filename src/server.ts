@@ -9,24 +9,23 @@ import MensagemRoutes from "./features/mensagens/routes/MensagemRoutes";
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// const corsOptions = {
-//   origin: "*",
-//   credentials: true, //access-control-allow-credentials:true
-//   optionSuccessStatus: 200,
-// };
+// const allowed = ["https://mod-4-fe.herokuapp.com"];
+const corsOptions: cors.CorsOptions = {
+  methods: "GET,OPTIONS,PUT,POST,DELETE",
+  origin: "*",
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("Servidor iniciado");
-});
-
 const userRoutes = new UserRoutes().init();
 const mensagemRoutes = new MensagemRoutes().init();
 
 app.use(userRoutes);
 app.use(mensagemRoutes);
+
+app.get("/", (req: Request, res: Response) => {
+  res.send("Servidor iniciado");
+});
 
 new Database()
   .openConnection()

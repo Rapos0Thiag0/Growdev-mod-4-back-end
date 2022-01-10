@@ -43,20 +43,19 @@ export class mensagem1641427308708 implements MigrationInterface {
         isNullable: false,
       },
     ],
+    foreignKeys: [
+      {
+        name: "fk_mensagem_user",
+        columnNames: ["user_uid"],
+        referencedTableName: "users",
+        referencedColumnNames: ["uid"],
+        onDelete: "CASCADE",
+      },
+    ],
   });
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.tabelaMensagens);
-
-    await queryRunner.createForeignKey(
-      "mensagens",
-      new TableForeignKey({
-        columnNames: ["user_uid"],
-        referencedColumnNames: ["uid"],
-        referencedTableName: "users",
-        onDelete: "CASCADE",
-      })
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
