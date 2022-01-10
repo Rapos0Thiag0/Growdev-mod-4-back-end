@@ -5,7 +5,8 @@ import { User } from "../../../core/data/database/entities/User";
 
 export default class MensagemController {
   public async store(req: Request, res: Response) {
-    const { descricao, detalhamento, user_uid } = req.body;
+    const { user_uid } = req.params;
+    const { descricao, detalhamento } = req.body;
     const user = await User.findOne(user_uid);
 
     if (user) {
@@ -20,15 +21,6 @@ export default class MensagemController {
     } else {
       return res.status(400).send("Usuário não encontrdo!");
     }
-    // const user_uid: number = Number(req.params.idUser);
-    // const { descricao, detalhamento } = req.body;
-
-    // const result: Mensagem = await new Mensagem(
-    //   descricao,
-    //   detalhamento,
-    //   user_uid
-    // ).save();
-    // return res.status(200).json(result);
   }
 
   public async index(req: Request, res: Response) {
@@ -39,6 +31,7 @@ export default class MensagemController {
     const { user_uid } = req.params;
     const userMensagens = await Mensagem.find({
       where: [{ user_uid: user_uid }],
+      select: ["descricao", "detalhamento", "uid"],
     });
 
     return res.status(200).json(userMensagens);
@@ -48,58 +41,69 @@ export default class MensagemController {
     const { uid } = req.params;
 
     const mensagens = await Mensagem.findOne(uid, {
-      select: ["descricao", "detalhamento"],
+      select: ["descricao", "detalhamento", "uid"],
     });
-
-    return res.status(200).json(mensagens);
+    if (mensagens) {
+      const descricao = mensagens.descricao;
+      const detalhamento = mensagens.detalhamento;
+      const uid = mensagens.uid;
+      const msg = {
+        descricao: descricao,
+        detalhamento: detalhamento,
+        uid: uid,
+      };
+      console.log(msg);
+      return res.status(200).json(msg);
+    }
   }
 
   public async update(req: Request, res: Response) {
-    const { uid } = req.params;
     const { user_uid } = req.params;
+    const { uid } = req.params;
 
     const { descricao, detalhamento } = req.body;
 
-    // const user = await User.findOne(user_uid);
-    // const mensagem = await Mensagem.findOne(uid);
+    const user = await User.findOne(user_uid);
+    const mensagem = await Mensagem.findOne(uid);
 
-    // if (descricao && detalhamento && user && mensagem) {
-    //   const mensagem = await new Mensagem(
-    //     descricao,
-    //     detalhamento,
-    //     user,
-    //     uid
-    //   ).save();
-    //   console.log(mensagem);
-    //   return res.status(200).send("Mensagem ataualizada com sucesso!");
-    // } else {
-    //   return res.status(400).send("Parâmmetros faltando!");
-    // }
-
-    const userMensagens = await Mensagem.find({
-      where: [{ user_uid: user_uid }],
-    });
-
-    if (user_uid && userMensagens && descricao && detalhamento) {
-      const mensagemProcurada: Mensagem | undefined = await Mensagem.findOne({
-        where: [{ uid: uid }],
-      });
-
-      if (mensagemProcurada) {
-        mensagemProcurada.descricao = descricao;
-        mensagemProcurada.detalhamento = detalhamento;
-        await Mensagem.save(mensagemProcurada);
-        // const mensagemEditada: object = {
-        //   descricao: descricao,
-        //   detalhamento: detalhamento,
-        // };
-        return res.status(200).json(mensagemProcurada);
-      } else {
-        return res.status(400).send("Mensagem não pode ser encontrado!");
-      }
+    if (descricao && detalhamento && user && mensagem) {
+      const mensagem = await new Mensagem(
+        descricao,
+        detalhamento,
+        user_uid,
+        user,
+        uid
+      ).save();
+      console.log(mensagem);
+      return res.status(200).send("Mensagem ataualizada com sucesso!");
     } else {
-      return res.status(400).send("Falha nas informações apresentadas!");
+      return res.status(400).send("Parâmmetros faltando!");
     }
+
+    // const userMensagens = await Mensagem.find({
+    //   where: [{ user_uid: user }],
+    // });
+
+    // if (user && mensagem && descricao && detalhamento) {
+    //   const mensagemProcurada: Mensagem | undefined = await Mensagem.findOne({
+    //     where: [{ uid: mensagem }],
+    //   });
+
+    // if (mensagemProcurada) {
+    //   mensagemProcurada.descricao = descricao;
+    //   mensagemProcurada.detalhamento = detalhamento;
+    //   await Mensagem.save(mensagemProcurada);
+    //   const mensagemEditada: object = {
+    //     descricao: descricao,
+    //     detalhamento: detalhamento,
+    //   };
+    //   return res.status(200).json(mensagemEditada);
+    // } else {
+    //   return res.status(400).send("Mensagem não pode ser encontrado!");
+    // }
+    // } else {
+    //   return res.status(400).send("Falha nas informações apresentadas!");
+    // }
   }
 
   public async destroy(req: Request, res: Response) {
