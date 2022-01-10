@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../../../core/data/database/entities/User";
+import { User } from "../../../core/data/database/entities/user";
 
 export default class UserController {
   public async store(req: Request, res: Response) {

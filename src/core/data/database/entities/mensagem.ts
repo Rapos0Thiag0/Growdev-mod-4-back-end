@@ -9,7 +9,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { User } from "./User";
+import { User } from "./user";
 @Entity({ name: "mensagens" })
 export class Mensagem extends BaseEntity {
   @PrimaryColumn()

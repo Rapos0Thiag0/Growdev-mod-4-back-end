@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { Mensagem } from "./Mensagem";
+import { Mensagem } from "./mensagem";
 
 @Entity({ name: "users" })
 export class User extends BaseEntity {

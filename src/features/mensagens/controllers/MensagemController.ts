@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Mensagem } from "../../../core/data/database/entities/Mensagem";
-import { User } from "../../../core/data/database/entities/User";
+import { Mensagem } from "../../../core/data/database/entities/mensagem";
+import { User } from "../../../core/data/database/entities/user";
 
 export default class MensagemController {
   public async store(req: Request, res: Response) {
