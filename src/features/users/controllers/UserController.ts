@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-
 import { User } from "../../../core/data/database/entities/User";
 
 export default class UserController {

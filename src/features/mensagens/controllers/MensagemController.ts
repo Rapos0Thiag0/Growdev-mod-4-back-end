@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-
 import { Mensagem } from "../../../core/data/database/entities/Mensagem";
 import { User } from "../../../core/data/database/entities/User";
 
