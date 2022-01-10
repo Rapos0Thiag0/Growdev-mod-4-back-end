@@ -1,3 +1,4 @@
+import { Mensagem } from "./mensagem";
 import {
   BaseEntity,
   BeforeInsert,
@@ -8,7 +9,6 @@ import {
   OneToMany,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { Mensagem } from "./mensagem";
 
 @Entity({ name: "users" })
 export class User extends BaseEntity {
